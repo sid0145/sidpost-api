@@ -1,15 +1,16 @@
-const path= require('path');
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const postsRoute= require('./routes/posts');
-const userRoute= require('./routes/user');
+const postsRoute = require("./routes/posts");
+const userRoute = require("./routes/user");
 
 //connectiong to the database
 mongoose
   .connect(
-    "mongodb+srv://Sid:jBWcaYOiVj9oZw9M@cluster0.xz4rb.mongodb.net/sid-post?retryWrites=true&w=majority"
+    process.env.MONGODB_URI ||
+      "mongodb+srv://Sid:jBWcaYOiVj9oZw9M@cluster0.xz4rb.mongodb.net/sid-post?retryWrites=true"
   )
   .then(() => {
     console.log("connected successfully");
@@ -44,6 +45,5 @@ app.use((req, res, next) => {
 
 app.use("/api/posts", postsRoute);
 app.use("/api/user", userRoute);
-
 
 module.exports = app;

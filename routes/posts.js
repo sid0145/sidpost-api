@@ -42,7 +42,6 @@ router.post(
       imagePath: url + "/images/" + req.file.filename,
       creator: req.userData.userId,
     });
-    console.log(post);
     post.save().then((data) => {
       res.status(201).json({
         message: "added successfully",
