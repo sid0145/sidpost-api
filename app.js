@@ -8,12 +8,9 @@ const userRoute = require("./routes/user");
 
 //connectiong to the database
 mongoose
-  .connect(
-    "mongodb+srv://Sid:jBWcaYOiVj9oZw9M@cluster0.xz4rb.mongodb.net/sid-post?retryWrites=true",
-    {
-      useNewUrlParser: true,
-    }
-  )
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+  })
   .then(() => {
     console.log("connected successfully");
   })
