@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
     if (isValid) {
       error = null;
     }
-    cb(error, "backend/images");
+    cb(error, "images");
   },
   filename: (req, file, cb) => {
     const name = file.originalname.toLowerCase().split(" ").join("-");
@@ -36,6 +36,7 @@ router.post(
   multer({ storage: storage }).single("image"),
   (req, res, next) => {
     const url = req.protocol + "://" + req.get("host");
+    console.log(url);
     const post = new Post({
       title: req.body.title,
       content: req.body.content,
@@ -43,6 +44,7 @@ router.post(
       creator: req.userData.userId,
     });
     post.save().then((data) => {
+      console.log(data);
       res.status(201).json({
         message: "added successfully",
         post: {
@@ -59,7 +61,6 @@ router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const postQuery = Post.find();
-  console.log(postQuery);
   let fetchedPosts;
   if (pageSize && currentPage) {
     postQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
